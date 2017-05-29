@@ -1,12 +1,57 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+import java.io.*;
+
 /*
  * Created by ravenalb on 24-5-2017.
  */
+
 public class HandleJson {
 
-    public static void main(String[] args){
+    private static JsonArray rooms = new JsonArray();
+    //private static List<Object> allRooms = new ArrayList<Object>();
+    private static final String ROOM_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\rooms\\";
 
+    public static void main(String[] args){
+        //createRooms();
+        loadRoomJson("r2");
     }
 
+    private static void createRooms(){
+        Room r1 = new Room(1, "test name", "Test description about the room.");
+        Room r2 = new Room(2, "test 2 name", "test 2 description");
+        Room r3 = new Room(3, "test 3 name", "test 3 description");
+        saveRoomJson(r1, "r1");
+        saveRoomJson(r2, "r2");
+        saveRoomJson(r3, "r3");
+    }
+
+    private static void saveRoomJson(Object room, String id){
+        try{
+            String file = ROOM_FILE_LOCATION + id + ".json";
+            FileWriter writer = new FileWriter(file);
+            Gson gson = new Gson();
+            String object = gson.toJson(room);
+            writer.write(object);
+            writer.close();
+            System.out.println("file saved");
+        }catch(IOException e){
+            e.getMessage();
+        }
+    }
+
+    private static void loadRoomJson(String id){
+        Gson gson = new Gson();
+        String file = ROOM_FILE_LOCATION + id + ".json";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            Room currentRoom = gson.fromJson(br, Room.class);
+            currentRoom.returnRoomName();
+        }catch(FileNotFoundException e){
+            e.getMessage();
+        }
+    }
 
 
 }

@@ -8,19 +8,22 @@ import java.util.List;
 
 public class Room {
 
-    private String id;
+    private Integer id;
     private String name;
     private String description;
     private List<String> ground = new ArrayList<String>();
 
-    public Room(String id, String name, String desc){
+    Room(Integer id, String name, String desc){
         setId(id);
         setName(name);
         setDescription(desc);
         setItemOnGround();
     }
 
-    private void setId(String id){
+    public static void main(String[] args){
+    }
+
+    private void setId(Integer id){
         this.id = id;
     }
 
@@ -37,23 +40,22 @@ public class Room {
         this.ground.add(1,"item2");
     }
 
-    private void createJsonObject(){
-
+    String returnRoomName(){
+        System.out.println("roomname: " + this.name);
+        return this.name;
     }
 
-    private void printRoom(){
+    String returnRoomDescription(){
+        System.out.println("roomdesc: " + this.description);
+        return this.description;
+    }
+
+    public void printRoom(){
         System.out.println(id);
         System.out.println(name);
         System.out.println(description);
         System.out.println(ground);
     }
-
-
-    public static void main(String[] args){
-        Room room1 = new Room("1", "test name", "Test description about the room.");
-        room1.printRoom();
-    }
-
 
 
 }
