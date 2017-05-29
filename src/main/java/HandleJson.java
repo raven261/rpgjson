@@ -12,10 +12,12 @@ public class HandleJson {
     private static JsonArray rooms = new JsonArray();
     //private static List<Object> allRooms = new ArrayList<Object>();
     private static final String ROOM_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\rooms\\";
+    private static final String PC_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\";
 
     public static void main(String[] args){
         //createRooms();
-        loadRoomJson("r2");
+        createCharacter();
+        //loadRoomJson("r2");
     }
 
     private static void createRooms(){
@@ -27,12 +29,31 @@ public class HandleJson {
         saveRoomJson(r3, "r3");
     }
 
+    private static void createCharacter(){
+        Character pc = new Character("name", 0, 0, 10);
+        saveCharacterJson(pc, "pc");
+    }
+
     private static void saveRoomJson(Object room, String id){
         try{
             String file = ROOM_FILE_LOCATION + id + ".json";
             FileWriter writer = new FileWriter(file);
             Gson gson = new Gson();
             String object = gson.toJson(room);
+            writer.write(object);
+            writer.close();
+            System.out.println("file saved");
+        }catch(IOException e){
+            e.getMessage();
+        }
+    }
+
+    private static void saveCharacterJson(Object o, String id){
+        try{
+            String file = PC_FILE_LOCATION + id + ".json";
+            FileWriter writer = new FileWriter(file);
+            Gson gson = new Gson();
+            String object = gson.toJson(o);
             writer.write(object);
             writer.close();
             System.out.println("file saved");
