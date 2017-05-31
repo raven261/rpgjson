@@ -6,10 +6,10 @@ import java.util.List;
  */
 public class Character {
 
-    String name;
+    String name = "Test Name";
     private List<String> inventory = new ArrayList<String>();
     //private List<Integer> coinPurse = new ArrayList<Integer>();
-    private int[] location = new int[2];
+    private static int[] location = new int[2];
     private int[] coinPurse = new int[1];
 
 
@@ -25,12 +25,12 @@ public class Character {
         this.name = name;
     }
 
-    private void setLocationX(int value){
-        this.location[0] = value;
+    static void setLocationX(int value){
+        location[0] = value;
     }
 
-    private void setLocationY(int value){
-        this.location[1] = value;
+    static void setLocationY(int value){
+        location[1] = value;
     }
 
     private void setCoinPurse(int amount){
@@ -41,6 +41,12 @@ public class Character {
         this.inventory.add(item);
     }
 
+    static int returnPcLocationX(){
+        return location[0];
+    }
 
+    static int returnPcLocationY(){
+        return location[0];
+    }
 
 }

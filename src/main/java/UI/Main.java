@@ -12,30 +12,26 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-//    private Stage primaryStage;
+
     private AnchorPane ui;
+
     @Override
     public void start(Stage primaryStage){
         try{
             BorderPane root = new BorderPane();
-            //Scene scene = new Scene(root, 600,600);
-            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(Main.class.getResource("C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\UI\\ui.fxml"));
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui.fxml"));
             ui = loader.load();
 
             Scene scene = new Scene(ui);
-
+            primaryStage.setTitle("RPG game");
             primaryStage.setScene(scene);
             primaryStage.show();
         }catch(Exception e){
             e.printStackTrace();
         }
 
-        //        this.primaryStage = primaryStage;
-//        this.primaryStage.setTitle("RPG game");
+
 //
 //        initUiLayout();
     }

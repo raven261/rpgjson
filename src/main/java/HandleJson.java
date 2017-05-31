@@ -26,6 +26,12 @@ public class HandleJson {
         //loadRoomJson("r2");
     }
 
+    public void initializeGameData(){
+        createRooms();
+        createCharacter();
+
+    }
+
     private static void createRooms(){
         Room r1 = new Room(1, "test name", "Test description about the room.");
         Room r2 = new Room(2, "test 2 name", "test 2 description");
