@@ -2,8 +2,9 @@ package UI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /*
@@ -11,22 +12,53 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+//    private Stage primaryStage;
+    private AnchorPane ui;
     @Override
-    public void start(final Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("game.fxml"));
-        primaryStage.setTitle("RPG");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+    public void start(Stage primaryStage){
+        try{
+            BorderPane root = new BorderPane();
+            //Scene scene = new Scene(root, 600,600);
+            //scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(Main.class.getResource("C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\UI\\ui.fxml"));
 
-        //final Scene scene1 = new Scene(game, 700, 500);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui.fxml"));
+            ui = loader.load();
 
-       // primaryStage.setScene(scene1);
+            Scene scene = new Scene(ui);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        //        this.primaryStage = primaryStage;
+//        this.primaryStage.setTitle("RPG game");
+//
+//        initUiLayout();
     }
 
+//    public void initUiLayout(){
+//        try{
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(Main.class.getResource("C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\UI\\ui.fxml"));
+//            ui = loader.load();
+//
+//            Scene scene = new Scene(ui);
+//            primaryStage.setScene(scene);
+//            primaryStage.show();
+//        }catch(IOException e){
+//            e.printStackTrace();
+//        }
+//    }
+
+//    public Stage getPrimaryStage(){
+//        return primaryStage;
+//    }
 
     public static void main(String[] args) {
-
-
         launch(args);
     }
 

@@ -2,6 +2,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Created by ravenalb on 24-5-2017.
@@ -9,10 +11,14 @@ import java.io.*;
 
 public class HandleJson {
 
-    private static JsonArray rooms = new JsonArray();
-    //private static List<Object> allRooms = new ArrayList<Object>();
     private static final String ROOM_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\rooms\\";
     private static final String PC_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\";
+
+
+    private int[][] world = {
+            {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+            {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+    };
 
     public static void main(String[] args){
         //createRooms();
