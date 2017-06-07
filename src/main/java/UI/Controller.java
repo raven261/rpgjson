@@ -4,10 +4,12 @@ package UI;
  * Created by ravenalb on 29-5-2017.
  */
 
+import game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -18,10 +20,14 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+    private Game game = new Game();
+
     @FXML
     private TextArea roomName;
     @FXML
     private TextField actionTextField;
+    @FXML
+    private Button btnStart;
 
     @FXML
     private void handleActionTextField(ActionEvent event){
@@ -34,6 +40,12 @@ public class Controller implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    private void handleStartButton(){
+        game.initializeGameData();
+        //roomName.setText();
     }
 
     @Override

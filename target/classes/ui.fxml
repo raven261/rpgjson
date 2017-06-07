@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +12,8 @@
          <font>
             <Font size="10.0" />
          </font></TextArea>
-      <TextField id="actionTextField" layoutX="34.0" layoutY="231.0" onAction="#handleActionTextField" fx:id="actionTextField" />
+      <TextField id="actionTextField" fx:id="actionTextField" layoutX="34.0" layoutY="231.0" onAction="#handleActionTextField" />
       <TextArea id="roomDescription" editable="false" focusTraversable="false" layoutX="34.0" layoutY="72.0" prefHeight="121.0" prefWidth="334.0" />
+      <Button id="btnStart" fx:id="btnStart" layoutX="309.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleStartButton" text="Start" />
    </children>
 </AnchorPane>

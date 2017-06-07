@@ -1,3 +1,5 @@
+package game;
+
 /*
  * Created by ravenalb on 31-5-2017.
  */
@@ -8,11 +10,11 @@ public class World {
             {11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
     };
 
-    //private Character pc = new Character();
+    //private game.Character pc = new game.Character();
 
     public static void main(String[] args) {
-        // new World().printRoom();
-        //new World().test();
+        // new game.World().printRoom();
+        //new game.World().test();
     }
 
     Integer getRoomCoords(int x, int y) {
