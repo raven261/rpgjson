@@ -25,9 +25,14 @@ public class Controller implements Initializable {
     @FXML
     private TextArea roomName;
     @FXML
+    private TextArea roomDescription;
+    @FXML
     private TextField actionTextField;
     @FXML
     private Button btnStart;
+
+    @FXML
+    private TextArea exitsOverview;
 
     @FXML
     private void handleActionTextField(ActionEvent event){
@@ -35,7 +40,9 @@ public class Controller implements Initializable {
             @Override
             public void handle(KeyEvent ke) {
                 if (ke.getCode().equals(KeyCode.ENTER)) {
-                    System.out.println("it works!");
+                    game.getPlayerAction(actionTextField.getText());
+                    game.performAction();
+                    displayRoomData();
                     actionTextField.clear();
                 }
             }
@@ -45,8 +52,16 @@ public class Controller implements Initializable {
     @FXML
     private void handleStartButton(){
         game.initializeGameData();
-        //roomName.setText();
+        displayRoomData();
+
     }
+
+    private void displayRoomData(){
+        roomName.setText(game.returnRoomName());
+        roomDescription.setText(game.returnRoomDescription());
+        exitsOverview.setText(game.returnRoomExits());
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb){

@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -14,12 +15,18 @@ public class Room {
     private String name;
     private String description;
     private List<String> ground = new ArrayList<String>();
+    private HashMap<String, String> exits = new HashMap<String, String>();
 
-    Room(Integer id, String name, String desc){
+    Room(Integer id, String name, String desc, String n, String s, String e, String w){
         setId(id);
         setName(name);
         setDescription(desc);
         setItemOnGround();
+        setExit("north", n);
+        setExit("south", s);
+        setExit("east", e);
+        setExit("west", w);
+
     }
 
     public static void main(String[] args){
@@ -42,13 +49,19 @@ public class Room {
         this.ground.add(1,"item2");
     }
 
+    private void setExit(String direction, String room){
+        this.exits.put(direction, room);
+    }
+
+    HashMap returnExits(){
+        return this.exits;
+    }
+
     String returnRoomName(){
-        System.out.println("roomname: " + this.name);
         return this.name;
     }
 
     String returnRoomDescription(){
-        System.out.println("roomdesc: " + this.description);
         return this.description;
     }
 

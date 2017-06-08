@@ -21,7 +21,6 @@ class Data {
             String object = gson.toJson(room);
             writer.write(object);
             writer.close();
-            System.out.println("room saved");
         }catch(IOException e){
             e.getMessage();
         }
@@ -41,17 +40,31 @@ class Data {
         }
     }
 
-    void loadRoomJson(String id){
+    Room loadRoomJson(String id){
         Gson gson = new Gson();
         String file = ROOM_FILE_LOCATION + id + ".json";
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            Room currentRoom = gson.fromJson(br, Room.class);
-            currentRoom.returnRoomName();
+            return gson.fromJson(br, Room.class);
         }catch(FileNotFoundException e){
             e.getMessage();
         }
+        return null;
     }
 
+
+    Character loadPCJson(String id){
+        Gson gson = new Gson();
+        String file = PC_FILE_LOCATION + id + ".json";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            //Room currentRoom = gson.fromJson(br, Room.class);
+            //currentRoom.returnRoomName();
+            return gson.fromJson(br, Character.class);
+        }catch(FileNotFoundException e){
+            e.getMessage();
+        }
+        return null;
+    }
 
 }

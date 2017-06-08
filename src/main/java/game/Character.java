@@ -6,33 +6,23 @@ import java.util.List;
 /*
  * Created by ravenalb on 29-5-2017.
  */
-public class Character {
+class Character {
 
     String name = "Test Name";
     private List<String> inventory = new ArrayList<String>();
-    //private List<Integer> coinPurse = new ArrayList<Integer>();
-    private static int[] location = new int[2];
+    private String location;
     private int[] coinPurse = new int[1];
 
 
-    Character(String name, int x, int y, int gold){
+    Character(String name, String loc, int gold){
         setName(name);
-        setLocationX(x);
-        setLocationY(y);
+        setLocation(loc);
         setCoinPurse(gold);
         addItemToInventory("item1");
     }
 
     private void setName(String name){
         this.name = name;
-    }
-
-    static void setLocationX(int value){
-        location[0] = value;
-    }
-
-    static void setLocationY(int value){
-        location[1] = value;
     }
 
     private void setCoinPurse(int amount){
@@ -43,12 +33,9 @@ public class Character {
         this.inventory.add(item);
     }
 
-    static int returnPcLocationX(){
-        return location[0];
-    }
 
-    static int returnPcLocationY(){
-        return location[0];
+    private void setLocation(String loc){
+        this.location = loc;
     }
 
 }
