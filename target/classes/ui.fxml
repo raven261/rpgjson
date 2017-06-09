@@ -20,7 +20,9 @@
         </font></TextArea>
 
       <Button id="btnStart" fx:id="btnStart" layoutX="309.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleStartButton" text="Start" />
-      <Label layoutX="394.0" layoutY="51.0" text="Exits:" />
+      <Label layoutX="384.0" layoutY="51.0" text="Exits:" />
       <TextArea id="exitOverview" fx:id="exitsOverview" editable="false" focusTraversable="false" layoutX="384.0" layoutY="72.0" prefHeight="76.0" prefWidth="73.0" />
+      <Label focusTraversable="false" layoutX="480.0" layoutY="51.0" text="ground:" />
+      <TextArea id="groundItems" fx:id="groundItems" editable="false" focusTraversable="false" layoutX="478.0" layoutY="72.0" prefHeight="98.0" prefWidth="88.0" />
    </children>
 </AnchorPane>

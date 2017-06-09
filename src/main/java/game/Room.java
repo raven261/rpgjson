@@ -45,8 +45,8 @@ public class Room {
     }
 
     private void setItemOnGround(){
-        this.ground.add(0, "item1");
-        this.ground.add(1,"item2");
+        this.ground.add(0, "i1");
+        this.ground.add(1,"i2");
     }
 
     private void setExit(String direction, String room){
@@ -61,16 +61,14 @@ public class Room {
         return this.name;
     }
 
+    List returnItems(){
+        return this.ground;
+    }
+
     String returnRoomDescription(){
         return this.description;
     }
 
-    public void printRoom(){
-        System.out.println(id);
-        System.out.println(name);
-        System.out.println(description);
-        System.out.println(ground);
-    }
 
 
 }

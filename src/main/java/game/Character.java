@@ -33,9 +33,22 @@ class Character {
         this.inventory.add(item);
     }
 
-
     private void setLocation(String loc){
         this.location = loc;
     }
+
+    String returnName(){
+        return this.name;
+    }
+
+    List returnInventory(){
+        return this.inventory;
+    }
+
+    String returnLocation(){
+        return this.location;
+    }
+
+
 
 }

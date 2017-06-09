@@ -30,9 +30,10 @@ public class Controller implements Initializable {
     private TextField actionTextField;
     @FXML
     private Button btnStart;
-
     @FXML
     private TextArea exitsOverview;
+    @FXML
+    private TextArea groundItems;
 
     @FXML
     private void handleActionTextField(ActionEvent event){
@@ -60,6 +61,7 @@ public class Controller implements Initializable {
         roomName.setText(game.returnRoomName());
         roomDescription.setText(game.returnRoomDescription());
         exitsOverview.setText(game.returnRoomExits());
+        groundItems.setText(game.returnRoomItems());
     }
 
 
