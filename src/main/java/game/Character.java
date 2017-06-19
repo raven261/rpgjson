@@ -54,6 +54,8 @@ class Character {
         return this.location;
     }
 
-
+    void addToPcInventory(String item){
+        this.inventory.add(item);
+    }
 
 }

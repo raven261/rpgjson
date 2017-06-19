@@ -111,6 +111,7 @@ public class Game {
         if(action.equals("go")){
             if(returnRoomExits().contains(subject)){
                 setCurrentRoom(data.loadRoom(returnExit(subject)));
+                setPCLocation();
                 //setCurrentRoom(returnExit());
             }
         }
@@ -162,7 +163,6 @@ public class Game {
             }
         }
         return exitKeys;
-
     }
 
     public String returnRoomItems(){
