@@ -11,13 +11,17 @@ import java.util.List;
 
 public class Room {
 
-    private Integer id;
+    //private Game game = new Game();
+
+    private String id;
     private String name;
     private String description;
     private List<String> ground = new ArrayList<String>();
     private HashMap<String, String> exits = new HashMap<String, String>();
 
-    Room(Integer id, String name, String desc, String n, String s, String e, String w){
+    //Room(){    }
+
+    Room(String id, String name, String desc, String n, String s, String e, String w){
         setId(id);
         setName(name);
         setDescription(desc);
@@ -32,7 +36,7 @@ public class Room {
     public static void main(String[] args){
     }
 
-    private void setId(Integer id){
+    private void setId(String id){
         this.id = id;
     }
 
@@ -45,8 +49,8 @@ public class Room {
     }
 
     private void setItemOnGround(){
-        this.ground.add(0, "i1");
-        this.ground.add(1,"i2");
+        this.ground.add(0, "gold");
+        //this.ground.add(1,"item1");
     }
 
     private void setExit(String direction, String room){
@@ -55,6 +59,10 @@ public class Room {
 
     HashMap returnExits(){
         return this.exits;
+    }
+
+    String returnId(){
+        return this.id;
     }
 
     String returnRoomName(){
@@ -69,6 +77,8 @@ public class Room {
         return this.description;
     }
 
-
+    void updateItems(List<String> items){
+        this.ground = items;
+    }
 
 }

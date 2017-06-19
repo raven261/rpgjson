@@ -15,8 +15,9 @@ class Data {
 
 
 
-    void saveRoomJson(Object room, String id){
+    void saveRoom(Object room, String id){
         try{
+
             String file = ROOM_FILE_LOCATION + id + ".json";
             FileWriter writer = new FileWriter(file);
             Gson gson = new Gson();
@@ -28,7 +29,7 @@ class Data {
         }
     }
 
-    void saveCharacterJson(Object o, String id){
+    void savePC(Object o, String id){
         try{
             String file = PC_FILE_LOCATION + id + ".json";
             FileWriter writer = new FileWriter(file);
@@ -42,7 +43,7 @@ class Data {
         }
     }
 
-    void saveItems(Object o, String id){
+    void saveItem(Object o, String id){
         try{
             String file = ITEM_FILE_LOCATION + id + ".json";
             FileWriter writer = new FileWriter(file);
@@ -56,7 +57,7 @@ class Data {
         }
     }
 
-    Room loadRoomJson(String id){
+    Room loadRoom(String id){
         Gson gson = new Gson();
         String file = ROOM_FILE_LOCATION + id + ".json";
         try {
@@ -69,7 +70,7 @@ class Data {
     }
 
 
-    Character loadPCJson(String id){
+    Character loadPC(String id){
         Gson gson = new Gson();
         String file = PC_FILE_LOCATION + id + ".json";
         try {

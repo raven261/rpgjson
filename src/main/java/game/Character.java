@@ -8,17 +8,22 @@ import java.util.List;
  */
 class Character {
 
+
+
     String name = "Test Name";
     private List<String> inventory = new ArrayList<String>();
-    private String location;
+    public String location;
     private int[] coinPurse = new int[1];
 
 
+    Character(){
+
+    }
     Character(String name, String loc, int gold){
         setName(name);
         setLocation(loc);
         setCoinPurse(gold);
-        addItemToInventory("item1");
+        addItemToInventory("gold");
     }
 
     private void setName(String name){

@@ -1,1 +1,1 @@
-{"id":1,"name":"test name","description":"Test description of the room.","ground":["i1","i2"],"exits":{"east":"r3","south":"x","north":"r2","west":"x"}}
+{"id":"r1","name":"test name","description":"Test description of the room.","ground":["gold"],"exits":{"east":"r3","south":"x","north":"r2","west":"x"}}

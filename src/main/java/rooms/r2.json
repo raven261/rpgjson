@@ -1,1 +1,1 @@
-{"id":2,"name":"test 2 name","description":"test 2 description","ground":["i1","i2"],"exits":{"east":"x","south":"r1","north":"x","west":"x"}}
+{"id":"r2","name":"test 2 name","description":"test 2 description","ground":["gold"],"exits":{"east":"x","south":"r1","north":"x","west":"x"}}

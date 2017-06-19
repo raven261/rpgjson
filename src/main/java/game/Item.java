@@ -16,6 +16,7 @@ public class Item {
     private boolean takable;
 
 
+    Item(){}
 
     Item(String id, String name, String type, String description, Integer value, boolean eatable, boolean takable){
         setId(id);

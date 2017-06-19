@@ -1,5 +1,8 @@
 package game;
 
+import com.google.gson.Gson;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,17 +13,25 @@ import java.util.List;
 
 public class Game {
 
-    private Data data = new Data();
-    private String currentRoom = "r2";
+    //TODO: how to save the location in the character file?
 
+    private Data data = new Data();
+    private String currentLocation;
+    private Room currentRoom;
+
+
+    private List<String> currentRoomGroundItems = new ArrayList<String>();
     private String rawAction = "start";
     private String[] actionArray = {};
+    private List<Room> allRooms = new ArrayList<Room>();
+    private List<Item> allItems = new ArrayList<Item>();
 
+    private Character pc = new Character();
 
     public static void main(String[] args){
-        //new Game().createItems();
+        //new Game().saveCurrentRoom();
         //new Game().returnItemId("item1");
-        //createRooms();
+        new Game().createRooms();
         //new Game().createCharacter();
         //loadRoomJson("r2");
         //new Game().roomExits();
@@ -32,37 +43,64 @@ public class Game {
         createRooms();
         System.out.println("rooms saved");
         createCharacter();
+        setStartLocation();
+    }
 
+    void saveCurrentRoom(){
+        data.saveRoom(this.currentRoom, this.currentRoom.returnId());
+    }
+
+    private void setPCLocation(){
+        pc.location = currentRoom.returnId();
+    }
+
+    private void setStartLocation(){
+        currentLocation = "r1";
+        this.currentRoom = data.loadRoom(currentLocation);
     }
 
     private void createItems(){
         Item i1 = new Item("i1", "item1", "thing", "item1 description, ", 1, false, true);
         Item i2 = new Item("i2", "item2", "food", "item2 description", 5, true, true);
+        Item gold = new Item("gold", "gold", "wealth", "a gold coin", 1, false, true);
+        Item p1 = new Item("p1", "healing-potion", "potion", "Healing potion", 10, true, true);
 
-        data.saveItems(i1, "i1");
-        data.saveItems(i2, "i2");
+        allItems.add(i1);
+        allItems.add(i2);
+        allItems.add(gold);
+        allItems.add(p1);
+
+        for(Item i : allItems){
+            data.saveItem(i, i.returnItemId());
+        }
     }
 
     private void createRooms(){
-        Room r1 = new Room(1, "test name", "Test description of the room.", "r2", "x", "r3", "x");
-        Room r2 = new Room(2, "test 2 name", "test 2 description", "x", "r1", "x", "x");
-        Room r3 = new Room(3, "test 3 name", "test 3 description", "x", "x", "x", "r1");
-        data.saveRoomJson(r1, "r1");
-        data.saveRoomJson(r2, "r2");
-        data.saveRoomJson(r3, "r3");
+        Room r1 = new Room("r1", "test name", "Test description of the room.", "r2", "x", "r3", "x");
+        Room r2 = new Room("r2", "test 2 name", "test 2 description", "x", "r1", "x", "x");
+        Room r3 = new Room("r3", "test 3 name", "test 3 description", "x", "x", "x", "r1");
+
+        allRooms.add(r1);
+        allRooms.add(r2);
+        allRooms.add(r3);
+
+        for(Room r : allRooms){
+            data.saveRoom(r, r.returnId());
+        }
     }
 
     private void createCharacter(){
         Character pc = new Character("name", "r1", 10);
-        data.saveCharacterJson(pc, "pc");
+
+        data.savePC(pc, "pc");
     }
 
     public void getPlayerAction(String takeAction){
         rawAction = takeAction.toLowerCase();
-        stringToArray();
+        stringToActionArray();
     }
 
-    private void stringToArray(){
+    private void stringToActionArray(){
         actionArray = rawAction.split(" ");
     }
 
@@ -72,12 +110,29 @@ public class Game {
 
         if(action.equals("go")){
             if(returnRoomExits().contains(subject)){
-                setCurrentRoom(returnExit(subject));
+                setCurrentRoom(data.loadRoom(returnExit(subject)));
+                //setCurrentRoom(returnExit());
             }
         }
         else if(action.equals("inspect")){
             if(returnRoomItems().contains(subject)){
 
+            }
+        }
+        else if(action.equals("take")){
+            if(returnRoomItems().contains(subject)){
+                //data.loadRoom(currentRoom.returnId()).removeItemFromGround(subject);
+                removeItemFromRoom(subject);
+                saveCurrentRoom();
+            }
+        }
+        else if(action.equals("save")){
+            if(returnRoomItems().equals("now")){
+                System.out.println("action: " + this.currentRoom);
+                saveCurrentRoom();
+            }else{
+                System.out.println("action: " + this.currentRoom);
+                saveCurrentRoom();
             }
         }
 
@@ -86,20 +141,20 @@ public class Game {
         }
     }
 
-    private void setCurrentRoom(String room){
+    private void setCurrentRoom(Room room){
         currentRoom = room;
     }
 
     public String returnRoomName(){
-        return data.loadRoomJson(currentRoom).returnRoomName();
+        return data.loadRoom(currentRoom.returnId()).returnRoomName();
     }
 
     public String returnRoomDescription(){
-        return data.loadRoomJson(currentRoom).returnRoomDescription();
+        return data.loadRoom(currentRoom.returnId()).returnRoomDescription();
     }
 
     private List gatherRoomExits(){
-        HashMap exits = data.loadRoomJson(currentRoom).returnExits();
+        HashMap exits = data.loadRoom(currentRoom.returnId()).returnExits();
         List<String> exitKeys = new ArrayList<String>();
         for(Object o : exits.keySet()){
             if(!exits.get(o).toString().equals("x")){
@@ -109,31 +164,10 @@ public class Game {
         return exitKeys;
 
     }
-//TODO: change how items are being handled.
-//    private HashMap gatherRoomItems(){
-//        List items = data.loadRoomJson(currentRoom).returnItems();
-//        HashMap<String, String> itemList = new HashMap<String, String>();
-//        System.out.println(items);
-//        for (Object o : items){
-//            String item = o.toString();
-//            String name = data.loadItem(item).returnItemName();
-//            String id = data.loadItem(item).returnItemId();
-//            itemList.put(id, name);
-//        }
-//        System.out.println(itemList);
-//        return itemList;
-//    }
-
-//    private String returnItemId(String name){
-//        //TODO: doesnt work!
-//        HashMap items = gatherRoomItems();
-//        Object key = items.get(name);
-//        System.out.println(key);
-//        return key.toString();
-//    }
 
     public String returnRoomItems(){
-        List items = data.loadRoomJson(currentRoom).returnItems();
+        setCurrentRoomGroundItems();
+        List items = data.loadRoom(currentRoom.returnId()).returnItems();
         String allItems = "";
         for(Object o : items){
             String itemName = data.loadItem(o.toString()).returnItemName();
@@ -151,7 +185,7 @@ public class Game {
     }
 
     private String returnExit(String exit){
-        HashMap exits = data.loadRoomJson(currentRoom).returnExits();
+        HashMap exits = data.loadRoom(currentRoom.returnId()).returnExits();
         Object key = exits.get(exit);
         if(key.equals("x")){
             return "no exit";
@@ -159,4 +193,16 @@ public class Game {
             return key.toString();}
     }
 
+    private void setCurrentRoomGroundItems(){
+        this.currentRoomGroundItems = currentRoom.returnItems();
+    }
+
+    private void removeItemFromRoom(String item){
+        this.currentRoomGroundItems.remove(item);
+        updateRoomItems();
+    }
+
+    private void updateRoomItems(){
+        currentRoom.updateItems(currentRoomGroundItems);
+    }
 }
