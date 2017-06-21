@@ -23,7 +23,7 @@ class Character {
         setName(name);
         setLocation(loc);
         setCoinPurse(gold);
-        addItemToInventory("gold");
+        //addItemToInventory("gold");
     }
 
     private void setName(String name){
@@ -46,7 +46,7 @@ class Character {
         return this.name;
     }
 
-    List returnInventory(){
+    List<String> returnInventory(){
         return this.inventory;
     }
 
@@ -56,6 +56,10 @@ class Character {
 
     void addToPcInventory(String item){
         this.inventory.add(item);
+    }
+
+    void updateInventory(List<String> inventory){
+        this.inventory = inventory;
     }
 
 }

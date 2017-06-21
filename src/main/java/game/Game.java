@@ -9,11 +9,13 @@ import java.util.List;
 
 /*
  * Created by ravenalb on 24-5-2017.
+ *
+ *  all changes will be saved directly, no general save is possible in this version
+ *  when loading a game it means that the current progress will be overwritten
+ *
  */
 
 public class Game {
-
-    //TODO: how to save the location in the character file?
 
     private Data data = new Data();
     private String currentLocation;
@@ -21,6 +23,7 @@ public class Game {
 
 
     private List<String> currentRoomGroundItems = new ArrayList<String>();
+    private List<String> pcInventory = new ArrayList<String>();
     private String rawAction = "start";
     private String[] actionArray = {};
     private List<Room> allRooms = new ArrayList<Room>();
@@ -50,6 +53,11 @@ public class Game {
         data.saveRoom(this.currentRoom, this.currentRoom.returnId());
     }
 
+    private void savePc(){
+        setPCLocation();
+        data.savePC(pc, "pc");
+    }
+
     private void setPCLocation(){
         pc.location = currentRoom.returnId();
     }
@@ -60,15 +68,17 @@ public class Game {
     }
 
     private void createItems(){
-        Item i1 = new Item("i1", "item1", "thing", "item1 description, ", 1, false, true);
-        Item i2 = new Item("i2", "item2", "food", "item2 description", 5, true, true);
+        Item stone = new Item("stone", "stone", "thing", "A stone", 0, false, true);
+        Item bread = new Item("bread", "bread", "food", "a piece of relatively fresh bread", 1, true, true);
         Item gold = new Item("gold", "gold", "wealth", "a gold coin", 1, false, true);
-        Item p1 = new Item("p1", "healing-potion", "potion", "Healing potion", 10, true, true);
+        Item hpotion = new Item("hpotion", "healing potion", "potion", "A bottle with some redish liquid that heals", 10, true, true);
+        Item shadow = new Item("shadow", "shadow", "environment", "your shadow on the ground", 0, false, false);
 
-        allItems.add(i1);
-        allItems.add(i2);
+        allItems.add(stone);
+        allItems.add(bread);
         allItems.add(gold);
-        allItems.add(p1);
+        allItems.add(hpotion);
+        allItems.add(shadow);
 
         for(Item i : allItems){
             data.saveItem(i, i.returnItemId());
@@ -112,27 +122,25 @@ public class Game {
             if(returnRoomExits().contains(subject)){
                 setCurrentRoom(data.loadRoom(returnExit(subject)));
                 setPCLocation();
-                //setCurrentRoom(returnExit());
             }
         }
         else if(action.equals("inspect")){
             if(returnRoomItems().contains(subject)){
-
             }
         }
         else if(action.equals("take")){
             if(returnRoomItems().contains(subject)){
-                //data.loadRoom(currentRoom.returnId()).removeItemFromGround(subject);
                 removeItemFromRoom(subject);
+                addItemToPcInventory(subject);
                 saveCurrentRoom();
+                savePc();
             }
         }
-        else if(action.equals("save")){
-            if(returnRoomItems().equals("now")){
-                System.out.println("action: " + this.currentRoom);
-                saveCurrentRoom();
-            }else{
-                System.out.println("action: " + this.currentRoom);
+        else if(action.equals("drop")){
+            if(pc.returnInventory().contains(subject)){
+                removeItemFromPcInventory(subject);
+                addItemToRoom(subject);
+                savePc();
                 saveCurrentRoom();
             }
         }
@@ -200,6 +208,29 @@ public class Game {
     private void removeItemFromRoom(String item){
         this.currentRoomGroundItems.remove(item);
         updateRoomItems();
+    }
+
+    private void addItemToRoom(String item){
+        this.currentRoomGroundItems.add(item);
+        updateRoomItems();
+    }
+
+    private void setPcInventory(){
+        this.pcInventory = pc.returnInventory();
+    }
+
+    private void updatePcInventory(){
+        pc.updateInventory(pcInventory);
+    }
+
+    private void removeItemFromPcInventory(String item){
+        this.pcInventory.remove(item);
+        updatePcInventory();
+    }
+
+    private void addItemToPcInventory(String item){
+        this.pcInventory.add(item);
+        updatePcInventory();
     }
 
     private void updateRoomItems(){

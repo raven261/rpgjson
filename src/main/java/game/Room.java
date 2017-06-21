@@ -51,6 +51,10 @@ public class Room {
     private void setItemOnGround(){
         this.ground.add(0, "gold");
         //this.ground.add(1,"item1");
+
+        Integer itemPack;
+
+
     }
 
     private void setExit(String direction, String room){
@@ -69,7 +73,7 @@ public class Room {
         return this.name;
     }
 
-    List returnItems(){
+    List<String> returnItems(){
         return this.ground;
     }
 
