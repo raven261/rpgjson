@@ -1,1 +1,1 @@
-{"id":"r3","name":"test 3 name","description":"test 3 description","ground":["gold"],"exits":{"east":"x","south":"x","north":"x","west":"r1"}}
+{"id":"r3","name":"test 3 name","description":"test 3 description","ground":["gold","bread","shadow","stone","hpotion"],"exits":{"east":"x","south":"x","north":"x","west":"r1"}}

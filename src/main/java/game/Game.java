@@ -15,6 +15,8 @@ import java.util.List;
  *
  */
 
+//TODO: create a new view to show amount of gold of pc
+
 public class Game {
 
     private Data data = new Data();
@@ -24,6 +26,8 @@ public class Game {
 
     private List<String> currentRoomGroundItems = new ArrayList<String>();
     private List<String> pcInventory = new ArrayList<String>();
+    private int[] pcCoinPurse = new int[1];
+    //private List<Integer> pcCoinPurse = new ArrayList<Integer>();
     private String rawAction = "start";
     private String[] actionArray = {};
     private List<Room> allRooms = new ArrayList<Room>();
@@ -32,24 +36,21 @@ public class Game {
     private Character pc = new Character();
 
     public static void main(String[] args){
-        //new Game().saveCurrentRoom();
-        //new Game().returnItemId("item1");
         new Game().createRooms();
-        //new Game().createCharacter();
-        //loadRoomJson("r2");
-        //new Game().roomExits();
     }
 
     public void initializeGameData(){
         createItems();
         System.out.println("items saved");
         createRooms();
-        System.out.println("rooms saved");
         createCharacter();
         setStartLocation();
+        setPcInventory();
+        setPcCoinPurse();
+        System.out.println("pcCoinPurse: " + this.pcCoinPurse[0]);
     }
 
-    void saveCurrentRoom(){
+    private void saveCurrentRoom(){
         data.saveRoom(this.currentRoom, this.currentRoom.returnId());
     }
 
@@ -86,7 +87,7 @@ public class Game {
     }
 
     private void createRooms(){
-        Room r1 = new Room("r1", "test name", "Test description of the room.", "r2", "x", "r3", "x");
+        Room r1 = new Room("r1", "test name", "This is from a development point of view the start room of the game.\n Here will be most of the test situations taking place so that navitating will not be necessary.", "r2", "x", "r3", "x");
         Room r2 = new Room("r2", "test 2 name", "test 2 description", "x", "r1", "x", "x");
         Room r3 = new Room("r3", "test 3 name", "test 3 description", "x", "x", "x", "r1");
 
@@ -100,7 +101,7 @@ public class Game {
     }
 
     private void createCharacter(){
-        Character pc = new Character("name", "r1", 10);
+        Character pc = new Character("name", "r1", 2);
 
         data.savePC(pc, "pc");
     }
@@ -126,14 +127,26 @@ public class Game {
         }
         else if(action.equals("inspect")){
             if(returnRoomItems().contains(subject)){
+                //TODO: how to implement inspect?
+                System.out.println("TODO");
             }
         }
         else if(action.equals("take")){
             if(returnRoomItems().contains(subject)){
-                removeItemFromRoom(subject);
-                addItemToPcInventory(subject);
-                saveCurrentRoom();
-                savePc();
+                if(data.loadItem(subject).returnItemTakable()) {
+                    if(subject.equals("gold")){
+                        removeItemFromRoom(subject);
+                        addItemToPcCoinPurse();
+                        saveCurrentRoom();
+                        savePc();
+                    }
+                    else {
+                        removeItemFromRoom(subject);
+                        addItemToPcInventory(subject);
+                        saveCurrentRoom();
+                        savePc();
+                    }
+                }
             }
         }
         else if(action.equals("drop")){
@@ -171,6 +184,16 @@ public class Game {
             }
         }
         return exitKeys;
+    }
+
+    public String returnPcInventory(){
+        List items = data.loadPC("pc").returnInventory();
+        String allItems = "";
+        for(Object o : items){
+            String itemName = data.loadItem(o.toString()).returnItemName();
+            allItems += itemName + "\n";
+        }
+        return allItems.replaceAll("\"", "");
     }
 
     public String returnRoomItems(){
@@ -219,6 +242,10 @@ public class Game {
         this.pcInventory = pc.returnInventory();
     }
 
+    private void setPcCoinPurse(){
+        this.pcCoinPurse[0] = data.loadPC("pc").returnCoinPurseValue();
+    }
+
     private void updatePcInventory(){
         pc.updateInventory(pcInventory);
     }
@@ -231,6 +258,12 @@ public class Game {
     private void addItemToPcInventory(String item){
         this.pcInventory.add(item);
         updatePcInventory();
+    }
+
+    private void addItemToPcCoinPurse(){
+        Integer oldCoin = data.loadPC("pc").returnCoinPurseValue();
+        Integer newCoin = oldCoin + 1;
+        pc.updateCoinPurse(newCoin);
     }
 
     private void updateRoomItems(){

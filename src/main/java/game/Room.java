@@ -49,11 +49,11 @@ public class Room {
     }
 
     private void setItemOnGround(){
-        this.ground.add(0, "gold");
-        //this.ground.add(1,"item1");
-
-        Integer itemPack;
-
+        this.ground.add("gold");
+        this.ground.add("bread");
+        this.ground.add("shadow");
+        this.ground.add("stone");
+        this.ground.add("hpotion");
 
     }
 

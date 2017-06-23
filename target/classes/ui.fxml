@@ -9,12 +9,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Controller">
    <children>
-      <TextArea id="roomName" fx:id="roomName" editable="false" focusTraversable="false" layoutX="34.0" layoutY="32.0" prefHeight="9.0" prefWidth="200.0">
+      <TextArea id="roomName" fx:id="roomName" editable="false" focusTraversable="false" layoutX="34.0" layoutY="32.0" prefHeight="7.0" prefWidth="200.0">
          <font>
             <Font size="12.0" />
          </font></TextArea>
       <TextField id="actionTextField" fx:id="actionTextField" layoutX="34.0" layoutY="231.0" onAction="#handleActionTextField" />
-      <TextArea id="roomDescription" fx:id="roomDescription" editable="false" focusTraversable="false" layoutX="34.0" layoutY="72.0" prefHeight="121.0" prefWidth="334.0">
+      <TextArea id="roomDescription" fx:id="roomDescription" editable="false" focusTraversable="false" layoutX="34.0" layoutY="72.0" prefHeight="121.0" prefWidth="334.0" wrapText="true">
         <font>
             <Font size="12.0" />
         </font></TextArea>
@@ -24,5 +24,7 @@
       <TextArea id="exitOverview" fx:id="exitsOverview" editable="false" focusTraversable="false" layoutX="384.0" layoutY="72.0" prefHeight="76.0" prefWidth="73.0" />
       <Label focusTraversable="false" layoutX="480.0" layoutY="51.0" text="ground:" />
       <TextArea id="groundItems" fx:id="groundItems" editable="false" focusTraversable="false" layoutX="478.0" layoutY="72.0" prefHeight="98.0" prefWidth="88.0" />
+      <Label id="pcInventoryLabel" layoutX="476.0" layoutY="192.0" text="Inventory" />
+      <TextArea id="pcInventory"  fx:id="pcInventory" layoutX="474.0" layoutY="209.0" prefHeight="156.0" prefWidth="110.0" />
    </children>
 </AnchorPane>

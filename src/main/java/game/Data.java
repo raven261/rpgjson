@@ -24,6 +24,7 @@ class Data {
             String object = gson.toJson(room);
             writer.write(object);
             writer.close();
+            System.out.println("room" + id + "saved");
         }catch(IOException e){
             e.getMessage();
         }

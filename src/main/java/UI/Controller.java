@@ -34,6 +34,8 @@ public class Controller implements Initializable {
     private TextArea exitsOverview;
     @FXML
     private TextArea groundItems;
+    @FXML
+    private TextArea pcInventory;
 
     @FXML
     private void handleActionTextField(ActionEvent event){
@@ -62,6 +64,7 @@ public class Controller implements Initializable {
         roomDescription.setText(game.returnRoomDescription());
         exitsOverview.setText(game.returnRoomExits());
         groundItems.setText(game.returnRoomItems());
+        pcInventory.setText(game.returnPcInventory());
     }
 
 

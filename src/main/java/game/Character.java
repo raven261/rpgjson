@@ -16,6 +16,7 @@ class Character {
     private int[] coinPurse = new int[1];
 
 
+
     Character(){
 
     }
@@ -50,12 +51,27 @@ class Character {
         return this.inventory;
     }
 
+    int[] returnCoinPurse(){
+        return this.coinPurse;
+    }
+
+    Integer returnCoinPurseValue(){
+        Integer coins = coinPurse[0];
+        System.out.println("tempCoinPurse: " + coins);
+        return coins;
+    }
+
     String returnLocation(){
         return this.location;
     }
 
     void addToPcInventory(String item){
         this.inventory.add(item);
+    }
+
+    void updateCoinPurse(Integer value){
+        //this.coinPurse.add(0, value);
+        this.coinPurse[0] = value;
     }
 
     void updateInventory(List<String> inventory){
