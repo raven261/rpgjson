@@ -52,7 +52,7 @@ class Data {
             String object = gson.toJson(o);
             writer.write(object);
             writer.close();
-            //System.out.println("item saved");
+            System.out.println("item" + id + "saved");
         }catch(IOException e){
             e.getMessage();
         }

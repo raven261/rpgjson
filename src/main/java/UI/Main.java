@@ -14,11 +14,12 @@ public class Main extends Application {
 
 
     private AnchorPane ui;
+    private AnchorPane inv;
 
     @Override
     public void start(Stage primaryStage){
         try{
-            BorderPane root = new BorderPane();
+            //BorderPane root = new BorderPane();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui.fxml"));
             ui = loader.load();
@@ -34,18 +35,21 @@ public class Main extends Application {
 
 //
 //        initUiLayout();
+        //inventoryScreen();
     }
 
-//    public void initUiLayout(){
+//    public void inventoryScreen(){
 //        try{
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(Main.class.getResource("C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\UI\\ui.fxml"));
-//            ui = loader.load();
 //
-//            Scene scene = new Scene(ui);
-//            primaryStage.setScene(scene);
-//            primaryStage.show();
-//        }catch(IOException e){
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/inv.fxml"));
+//            inv = loader.load();
+//            Stage inventoryStage = new Stage();
+//
+//            Scene invScene = new Scene(inv);
+//            inventoryStage.setTitle("Inventory");
+//            inventoryStage.setScene(invScene);
+//            inventoryStage.show();
+//        }catch(Exception e){
 //            e.printStackTrace();
 //        }
 //    }

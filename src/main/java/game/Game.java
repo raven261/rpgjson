@@ -1,8 +1,5 @@
 package game;
 
-import com.google.gson.Gson;
-
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +12,6 @@ import java.util.List;
  *
  */
 
-//TODO: create a new view to show amount of gold of pc
 
 public class Game {
 
@@ -27,7 +23,6 @@ public class Game {
     private List<String> currentRoomGroundItems = new ArrayList<String>();
     private List<String> pcInventory = new ArrayList<String>();
     private int[] pcCoinPurse = new int[1];
-    //private List<Integer> pcCoinPurse = new ArrayList<Integer>();
     private String rawAction = "start";
     private String[] actionArray = {};
     private List<Room> allRooms = new ArrayList<Room>();
@@ -41,13 +36,11 @@ public class Game {
 
     public void initializeGameData(){
         createItems();
-        System.out.println("items saved");
         createRooms();
         createCharacter();
         setStartLocation();
         setPcInventory();
         setPcCoinPurse();
-        System.out.println("pcCoinPurse: " + this.pcCoinPurse[0]);
     }
 
     private void saveCurrentRoom(){
@@ -60,7 +53,7 @@ public class Game {
     }
 
     private void setPCLocation(){
-        pc.location = currentRoom.returnId();
+        pc.updateLocation(currentRoom.returnId());
     }
 
     private void setStartLocation(){
@@ -222,6 +215,10 @@ public class Game {
             return "no exit";
         }else{
             return key.toString();}
+    }
+
+    public String returnCoinPurse(){
+        return data.loadPC("pc").returnCoinPurseValue().toString();
     }
 
     private void setCurrentRoomGroundItems(){

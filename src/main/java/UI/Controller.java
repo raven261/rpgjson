@@ -8,12 +8,16 @@ import game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,6 +40,11 @@ public class Controller implements Initializable {
     private TextArea groundItems;
     @FXML
     private TextArea pcInventory;
+    @FXML
+    private TextArea coinPurse;
+
+    @FXML
+    private Button btnTest;
 
     @FXML
     private void handleActionTextField(ActionEvent event){
@@ -59,12 +68,36 @@ public class Controller implements Initializable {
 
     }
 
+    @FXML
+    private void handleTestButton(){
+        openInventory();
+        displayInventory();
+    }
+
     private void displayRoomData(){
         roomName.setText(game.returnRoomName());
         roomDescription.setText(game.returnRoomDescription());
         exitsOverview.setText(game.returnRoomExits());
         groundItems.setText(game.returnRoomItems());
+       // pcInventory.setText(game.returnPcInventory());
+        coinPurse.setText(game.returnCoinPurse());
+    }
+
+    private void openInventory(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/inv.fxml"));
+            Parent inv = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(inv));
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void displayInventory(){
         pcInventory.setText(game.returnPcInventory());
+        coinPurse.setText(game.returnCoinPurse());
     }
 
 

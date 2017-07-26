@@ -11,15 +11,11 @@ import java.util.List;
 
 public class Room {
 
-    //private Game game = new Game();
-
     private String id;
     private String name;
     private String description;
     private List<String> ground = new ArrayList<String>();
     private HashMap<String, String> exits = new HashMap<String, String>();
-
-    //Room(){    }
 
     Room(String id, String name, String desc, String n, String s, String e, String w){
         setId(id);

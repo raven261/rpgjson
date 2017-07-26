@@ -10,9 +10,9 @@ class Character {
 
 
 
-    String name = "Test Name";
+    private String name = "PC Name";
     private List<String> inventory = new ArrayList<String>();
-    public String location;
+    private String location;
     private int[] coinPurse = new int[1];
 
 
@@ -35,10 +35,6 @@ class Character {
         this.coinPurse[0] = amount;
     }
 
-    private void addItemToInventory(String item){
-        this.inventory.add(item);
-    }
-
     private void setLocation(String loc){
         this.location = loc;
     }
@@ -49,10 +45,6 @@ class Character {
 
     List<String> returnInventory(){
         return this.inventory;
-    }
-
-    int[] returnCoinPurse(){
-        return this.coinPurse;
     }
 
     Integer returnCoinPurseValue(){
@@ -67,6 +59,10 @@ class Character {
 
     void addToPcInventory(String item){
         this.inventory.add(item);
+    }
+
+    void updateLocation(String location){
+        this.location = location;
     }
 
     void updateCoinPurse(Integer value){
