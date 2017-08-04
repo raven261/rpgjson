@@ -1,1 +1,1 @@
-{"id":"bread","name":"bread","type":"food","description":"a piece of relatively fresh bread","value":1,"eatable":true,"takable":true}
+{"id":"bread","name":"bread","type":"food","description":"a piece of relatively fresh bread","value":1,"availability":"common","eatable":true,"takable":true}

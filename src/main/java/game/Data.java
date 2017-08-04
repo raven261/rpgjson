@@ -12,6 +12,7 @@ class Data {
     private static final String ROOM_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\rooms\\";
     private static final String PC_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\";
     private static final String ITEM_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\items\\";
+    private static final String CONTAINER_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\containers\\";
 
 
 
@@ -58,6 +59,20 @@ class Data {
         }
     }
 
+    void saveContainers(Object c, String id){
+        try{
+            String file = CONTAINER_FILE_LOCATION + id + ".json";
+            FileWriter writer = new FileWriter(file);
+            Gson gson = new Gson();
+            String containerObject = gson.toJson(c);
+            writer.write(containerObject);
+            writer.close();
+            System.out.println("container" + id + "saved");
+        }catch(IOException e){
+            e.getMessage();
+        }
+    }
+
     Room loadRoom(String id){
         Gson gson = new Gson();
         String file = ROOM_FILE_LOCATION + id + ".json";
@@ -91,6 +106,18 @@ class Data {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             return gson.fromJson(br, Item.class);
+        }catch(FileNotFoundException e){
+            e.getMessage();
+        }
+        return null;
+    }
+
+    Container loadContainer(String id){
+        Gson gson = new Gson();
+        String file = CONTAINER_FILE_LOCATION + id + ".json";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            return gson.fromJson(br, Container.class);
         }catch(FileNotFoundException e){
             e.getMessage();
         }

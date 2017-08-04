@@ -65,7 +65,6 @@ public class Controller implements Initializable {
     private void handleStartButton(){
         game.initializeGameData();
         displayRoomData();
-
     }
 
     @FXML
@@ -79,7 +78,7 @@ public class Controller implements Initializable {
         roomDescription.setText(game.returnRoomDescription());
         exitsOverview.setText(game.returnRoomExits());
         groundItems.setText(game.returnRoomItems());
-       // pcInventory.setText(game.returnPcInventory());
+        pcInventory.setText(game.returnPcInventory());
         coinPurse.setText(game.returnCoinPurse());
     }
 
@@ -87,9 +86,9 @@ public class Controller implements Initializable {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/inv.fxml"));
             Parent inv = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(inv));
-            stage.show();
+            Stage inventoryStage = new Stage();
+            inventoryStage.setScene(new Scene(inv));
+            inventoryStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }

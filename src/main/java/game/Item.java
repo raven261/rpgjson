@@ -12,18 +12,20 @@ public class Item {
     private String type;
     private String description;
     private Integer value;
+    private String availability;
     private boolean eatable;
     private boolean takable;
 
 
-    Item(){}
+    //Item(){}
 
-    Item(String id, String name, String type, String description, Integer value, boolean eatable, boolean takable){
+    Item(String id, String name, String type, String description, Integer value, String availability, boolean eatable, boolean takable){
         setId(id);
         setName(name);
         setType(type);
         setDescription(description);
         setValue(value);
+        setAvailability(availability);
         setEatable(eatable);
         setTakable(takable);
     }
@@ -58,6 +60,10 @@ public class Item {
 
     private void setTakable(boolean takable){
         this.takable = takable;
+    }
+
+    private void setAvailability(String availability){
+        this.availability = availability;
     }
 
     String returnItemName(){

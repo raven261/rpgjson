@@ -3,12 +3,20 @@ package game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /*
  * Created by ravenalb on 24-5-2017.
  *
  *  all changes will be saved directly, no general save is possible in this version
  *  when loading a game it means that the current progress will be overwritten
+ *
+ *  Planned:
+ *  - add containers
+ *  - add monsters
+ *  - add combat (weapons, armour, hp, xp)
+ *  - add potions
+ *
  *
  */
 
@@ -25,19 +33,20 @@ public class Game {
     private int[] pcCoinPurse = new int[1];
     private String rawAction = "start";
     private String[] actionArray = {};
-    private List<Room> allRooms = new ArrayList<Room>();
-    private List<Item> allItems = new ArrayList<Item>();
+
 
     private Character pc = new Character();
+    private GameSetup gameSetup = new GameSetup();
 
     public static void main(String[] args){
-        new Game().createRooms();
+        new Game().initializeGameData();
     }
 
     public void initializeGameData(){
-        createItems();
-        createRooms();
-        createCharacter();
+        gameSetup.createItems();
+        gameSetup.createCharacter();
+        gameSetup.createContainers();
+        gameSetup.createRooms();
         setStartLocation();
         setPcInventory();
         setPcCoinPurse();
@@ -59,44 +68,6 @@ public class Game {
     private void setStartLocation(){
         currentLocation = "r1";
         this.currentRoom = data.loadRoom(currentLocation);
-    }
-
-    private void createItems(){
-        Item stone = new Item("stone", "stone", "thing", "A stone", 0, false, true);
-        Item bread = new Item("bread", "bread", "food", "a piece of relatively fresh bread", 1, true, true);
-        Item gold = new Item("gold", "gold", "wealth", "a gold coin", 1, false, true);
-        Item hpotion = new Item("hpotion", "healing potion", "potion", "A bottle with some redish liquid that heals", 10, true, true);
-        Item shadow = new Item("shadow", "shadow", "environment", "your shadow on the ground", 0, false, false);
-
-        allItems.add(stone);
-        allItems.add(bread);
-        allItems.add(gold);
-        allItems.add(hpotion);
-        allItems.add(shadow);
-
-        for(Item i : allItems){
-            data.saveItem(i, i.returnItemId());
-        }
-    }
-
-    private void createRooms(){
-        Room r1 = new Room("r1", "test name", "This is from a development point of view the start room of the game.\n Here will be most of the test situations taking place so that navitating will not be necessary.", "r2", "x", "r3", "x");
-        Room r2 = new Room("r2", "test 2 name", "test 2 description", "x", "r1", "x", "x");
-        Room r3 = new Room("r3", "test 3 name", "test 3 description", "x", "x", "x", "r1");
-
-        allRooms.add(r1);
-        allRooms.add(r2);
-        allRooms.add(r3);
-
-        for(Room r : allRooms){
-            data.saveRoom(r, r.returnId());
-        }
-    }
-
-    private void createCharacter(){
-        Character pc = new Character("name", "r1", 2);
-
-        data.savePC(pc, "pc");
     }
 
     public void getPlayerAction(String takeAction){

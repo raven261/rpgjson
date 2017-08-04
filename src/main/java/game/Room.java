@@ -49,7 +49,9 @@ public class Room {
         this.ground.add("bread");
         this.ground.add("shadow");
         this.ground.add("stone");
-        this.ground.add("hpotion");
+        this.ground.add("potionH");
+        this.ground.add("lockpick1");
+        //this.ground.add("barrel1");
 
     }
 
@@ -80,5 +82,10 @@ public class Room {
     void updateItems(List<String> items){
         this.ground = items;
     }
+
+    private void selectItemsForGround(){
+
+    }
+
 
 }

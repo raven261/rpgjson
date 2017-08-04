@@ -1,0 +1,10 @@
+all changes will be saved directly, no general save is possible in this version
+when loading a game it means that the current progress will be overwritten
+
+- Rooms -> add methods for random items on the ground
+- Navigation
+- Items
+- Containers -> add methods for random items in containers
+- Monsters
+- Combat
+- Magic
