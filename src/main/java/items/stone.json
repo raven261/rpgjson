@@ -1,1 +1,1 @@
-{"id":"stone","name":"stone","type":"thing","description":"A stone","value":0,"availability":"common","eatable":false,"takable":true}
+{"id":"stone","name":"stone","type":"thing","description":"A small stone","value":0,"availability":"common","eatable":false,"takable":true}

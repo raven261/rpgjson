@@ -86,6 +86,8 @@ public class Item {
         return this.value;
     }
 
+    String returnItemAvailability(){return this.availability;}
+
     boolean returnItemEatable(){
         return this.eatable;
     }

@@ -25,7 +25,7 @@ class Data {
             String object = gson.toJson(room);
             writer.write(object);
             writer.close();
-            System.out.println("room" + id + "saved");
+            System.out.println("room " + id + " saved");
         }catch(IOException e){
             e.getMessage();
         }
@@ -53,7 +53,7 @@ class Data {
             String object = gson.toJson(o);
             writer.write(object);
             writer.close();
-            System.out.println("item" + id + "saved");
+            System.out.println("item " + id + " saved");
         }catch(IOException e){
             e.getMessage();
         }
@@ -67,7 +67,7 @@ class Data {
             String containerObject = gson.toJson(c);
             writer.write(containerObject);
             writer.close();
-            System.out.println("container" + id + "saved");
+            System.out.println("container " + id + " saved");
         }catch(IOException e){
             e.getMessage();
         }

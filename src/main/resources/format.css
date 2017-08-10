@@ -1,0 +1,13 @@
+#anchorPane{
+-fx-background-color: grey;
+}
+
+#actionTextField{
+-fx-background-color: black;
+-fx-text-fill: white;
+}
+
+#exits{
+-fx-text-fill: white;
+-fx-font-size: 12;
+}

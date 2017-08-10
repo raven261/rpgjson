@@ -22,6 +22,7 @@ import java.util.Random;
 
 
 public class Game {
+    //TODO: setup combat system
 
     private Data data = new Data();
     private String currentLocation;
@@ -29,10 +30,12 @@ public class Game {
 
 
     private List<String> currentRoomGroundItems = new ArrayList<String>();
+    private List<String> currentRoomContainers = new ArrayList<String>();
     private List<String> pcInventory = new ArrayList<String>();
     private int[] pcCoinPurse = new int[1];
     private String rawAction = "start";
     private String[] actionArray = {};
+    private String actionFeedback;
 
 
     private Character pc = new Character();
@@ -80,51 +83,73 @@ public class Game {
     }
 
     public void performAction(){
+        try {
         String action = actionArray[0];
         String subject = actionArray[1];
 
-        if(action.equals("go")){
-            if(returnRoomExits().contains(subject)){
-                setCurrentRoom(data.loadRoom(returnExit(subject)));
-                setPCLocation();
-            }
-        }
-        else if(action.equals("inspect")){
-            if(returnRoomItems().contains(subject)){
-                //TODO: how to implement inspect?
-                System.out.println("TODO");
-            }
-        }
-        else if(action.equals("take")){
-            if(returnRoomItems().contains(subject)){
-                if(data.loadItem(subject).returnItemTakable()) {
-                    if(subject.equals("gold")){
-                        removeItemFromRoom(subject);
-                        addItemToPcCoinPurse();
-                        saveCurrentRoom();
-                        savePc();
-                    }
-                    else {
-                        removeItemFromRoom(subject);
-                        addItemToPcInventory(subject);
-                        saveCurrentRoom();
-                        savePc();
-                    }
-                }
-            }
-        }
-        else if(action.equals("drop")){
-            if(pc.returnInventory().contains(subject)){
-                removeItemFromPcInventory(subject);
-                addItemToRoom(subject);
-                savePc();
-                saveCurrentRoom();
-            }
-        }
 
-        else {
-            System.out.println("Unknown command");
-        }
+
+            if (action.equals("go")) {
+                if (returnRoomExits().contains(subject)) {
+                    setCurrentRoom(data.loadRoom(returnExit(subject)));
+                    setPCLocation();
+                    updateActionFeedback("You went " + subject);
+                }
+            } else if (action.equals("inspect")) {
+                if (returnRoomItems().contains(subject)) {
+                    //TODO: now items are retrieved with item name, should be actual id
+                    //TODO: inspect should also inspect items in inventory (or only?..)
+                    updateActionFeedback(data.loadItem(subject).returnItemDescription());
+                } else if (returnRoomContainers().contains(subject)) {
+                    updateActionFeedback(data.loadContainer(subject).returnContainerDescription());
+                }
+
+            } else if (action.equals("take")) {
+                if (returnRoomItems().contains(subject)) {
+                    if (data.loadItem(subject).returnItemTakable()) {
+                        if (subject.equals("gold")) {
+                            removeItemFromRoom(subject);
+                            addItemToPcCoinPurse();
+                            saveCurrentRoom();
+                            savePc();
+                            updateActionFeedback("You took a gold coin");
+                        } else {
+                            removeItemFromRoom(subject);
+                            addItemToPcInventory(subject);
+                            saveCurrentRoom();
+                            savePc();
+                            updateActionFeedback("You took a " + subject);
+                        }
+                    } else {
+                        updateActionFeedback("You cannot take " + subject);
+                    }
+                } else {
+                    updateActionFeedback("There is no such item here");
+                }
+            } else if (action.equals("drop")) {
+                if (pc.returnInventory().contains(subject)) {
+                    removeItemFromPcInventory(subject);
+                    addItemToRoom(subject);
+                    savePc();
+                    saveCurrentRoom();
+                    updateActionFeedback(subject + " dropped");
+                } else {
+                    updateActionFeedback("You do not have that item in your inventory");
+                }
+            } else if (action.equals("look")) {
+                updateActionFeedback("Looking for what?");
+            }
+        }catch(IndexOutOfBoundsException e){
+            updateActionFeedback("Unknown command!");
+            e.getMessage();}
+    }
+
+    private void updateActionFeedback(String action){
+        actionFeedback = action;
+    }
+
+    public String returnActionFeedback(){
+        return this.actionFeedback;
     }
 
     private void setCurrentRoom(Room room){
@@ -161,14 +186,37 @@ public class Game {
     }
 
     public String returnRoomItems(){
+        try {
         setCurrentRoomGroundItems();
         List items = data.loadRoom(currentRoom.returnId()).returnItems();
         String allItems = "";
-        for(Object o : items){
-            String itemName = data.loadItem(o.toString()).returnItemName();
-            allItems += itemName + "\n";
+
+            for (Object o : items) {
+                String itemName = data.loadItem(o.toString()).returnItemName();
+                allItems += itemName + "\n";
+            }
+            return allItems.replaceAll("\"", "");
+        }catch(NullPointerException e){
+            e.getMessage();
         }
-        return allItems.replaceAll("\"", "");
+        return "Nothing"; // when there are no items, or one item cannot be found
+        //TODO: when atleast one item cannot be found, none of the items will be shown
+    }
+
+    public String returnRoomContainers(){
+        setCurrentRoomContainers();
+        List containers = data.loadRoom(currentRoom.returnId()).returnRoomContainers();
+        String allContainers = "";
+        try {
+            for (Object o : containers) {
+                String containerName = data.loadContainer(o.toString()).returnContainerName();
+                allContainers += containerName + "\n";
+            }
+            return allContainers.replaceAll("\"", "");
+        }catch(NullPointerException e){
+            e.getMessage();
+        }
+        return allContainers;
     }
 
     public String returnRoomExits(){
@@ -195,6 +243,8 @@ public class Game {
     private void setCurrentRoomGroundItems(){
         this.currentRoomGroundItems = currentRoom.returnItems();
     }
+
+    private void setCurrentRoomContainers(){this.currentRoomContainers = currentRoom.returnRoomContainers();}
 
     private void removeItemFromRoom(String item){
         this.currentRoomGroundItems.remove(item);

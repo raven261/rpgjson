@@ -15,13 +15,15 @@ public class Room {
     private String name;
     private String description;
     private List<String> ground = new ArrayList<String>();
+    private List<String> containers = new ArrayList<String>();
     private HashMap<String, String> exits = new HashMap<String, String>();
 
-    Room(String id, String name, String desc, String n, String s, String e, String w){
+    Room(String id, String name, String n, String s, String e, String w, List<String> ground, List<String> containers, String desc){
         setId(id);
         setName(name);
         setDescription(desc);
-        setItemOnGround();
+        setItemOnGround(ground);
+        setContainersInRoom(containers);
         setExit("north", n);
         setExit("south", s);
         setExit("east", e);
@@ -44,16 +46,19 @@ public class Room {
         this.description = desc;
     }
 
-    private void setItemOnGround(){
-        this.ground.add("gold");
-        this.ground.add("bread");
-        this.ground.add("shadow");
-        this.ground.add("stone");
-        this.ground.add("potionH");
-        this.ground.add("lockpick1");
+    private void setItemOnGround(List<String> ground){
+//        this.ground.add("gold");
+//        this.ground.add("bread");
+//        this.ground.add("shadow");
+//        this.ground.add("stone");
+//        this.ground.add("potionH");
+//        this.ground.add("lockpick1");
         //this.ground.add("barrel1");
+        this.ground = ground;
 
     }
+
+    private void setContainersInRoom(List<String> container){this.containers = container;}
 
     private void setExit(String direction, String room){
         this.exits.put(direction, room);
@@ -74,6 +79,8 @@ public class Room {
     List<String> returnItems(){
         return this.ground;
     }
+
+    List<String> returnRoomContainers(){return this.containers;}
 
     String returnRoomDescription(){
         return this.description;

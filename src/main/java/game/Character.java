@@ -8,6 +8,7 @@ import java.util.List;
  */
 class Character {
 
+    //TODO: setup health system
 
 
     private String name = "PC Name";
@@ -49,7 +50,6 @@ class Character {
 
     Integer returnCoinPurseValue(){
         Integer coins = coinPurse[0];
-        System.out.println("tempCoinPurse: " + coins);
         return coins;
     }
 
