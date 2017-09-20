@@ -1,1 +1,1 @@
-{"id":"r2","name":"North Street","description":"test 2 description","ground":["shadow"],"containers":[],"exits":{"east":"x","south":"r1","north":"x","west":"x"}}
+{"id":"r2","name":"North Street","description":"test 2 description","ground":["shadow"],"containers":["chest"],"exits":{"east":"x","south":"r1","north":"x","west":"x"}}

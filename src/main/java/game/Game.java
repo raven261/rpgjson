@@ -3,7 +3,6 @@ package game;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 /*
  * Created by ravenalb on 24-5-2017.
@@ -11,18 +10,16 @@ import java.util.Random;
  *  all changes will be saved directly, no general save is possible in this version
  *  when loading a game it means that the current progress will be overwritten
  *
- *  Planned:
- *  - add containers
- *  - add monsters
- *  - add combat (weapons, armour, hp, xp)
- *  - add potions
- *
- *
  */
 
 
 public class Game {
+    //TODO: unlocking locked containers
     //TODO: setup combat system
+    //TODO: create shopping system
+    //TODO: create quest system?
+    //TODO: NPC's met dialoog?
+    //TODO: create books?
 
     private Data data = new Data();
     private String currentLocation;
@@ -36,6 +33,7 @@ public class Game {
     private String rawAction = "start";
     private String[] actionArray = {};
     private String actionFeedback;
+    private HashMap<String, Integer> currentShop = new HashMap<String, Integer>();
 
 
     private Character pc = new Character();
@@ -56,7 +54,7 @@ public class Game {
     }
 
     private void saveCurrentRoom(){
-        data.saveRoom(this.currentRoom, this.currentRoom.returnId());
+        data.saveRoom(this.currentRoom, this.currentRoom.returnRoomId());
     }
 
     private void savePc(){
@@ -65,7 +63,7 @@ public class Game {
     }
 
     private void setPCLocation(){
-        pc.updateLocation(currentRoom.returnId());
+        pc.updateLocation(currentRoom.returnRoomId());
     }
 
     private void setStartLocation(){
@@ -96,15 +94,18 @@ public class Game {
                     updateActionFeedback("You went " + subject);
                 }
             } else if (action.equals("inspect")) {
+                // show description of specified item
                 if (returnRoomItems().contains(subject)) {
-                    //TODO: now items are retrieved with item name, should be actual id
-                    //TODO: inspect should also inspect items in inventory (or only?..)
+                    //TODO: now items are retrieved with item name, should be actual id (for now id will be same as the name)
                     updateActionFeedback(data.loadItem(subject).returnItemDescription());
                 } else if (returnRoomContainers().contains(subject)) {
                     updateActionFeedback(data.loadContainer(subject).returnContainerDescription());
+                } else if (returnPcInventory().contains(subject)){
+                    updateActionFeedback(data.loadItem(subject).returnItemDescription());
                 }
 
             } else if (action.equals("take")) {
+                // put specified item in inventory and remove from location
                 if (returnRoomItems().contains(subject)) {
                     if (data.loadItem(subject).returnItemTakable()) {
                         if (subject.equals("gold")) {
@@ -120,13 +121,14 @@ public class Game {
                             savePc();
                             updateActionFeedback("You took a " + subject);
                         }
-                    } else {
-                        updateActionFeedback("You cannot take " + subject);
                     }
-                } else {
-                    updateActionFeedback("There is no such item here");
+                } else if (returnRoomContainers().contains(subject)) {
+                    updateActionFeedback("You cannot pick up " + subject);
+                }else {
+                    updateActionFeedback("These is no such item here.");
                 }
             } else if (action.equals("drop")) {
+                //take specified item from inventory and put on ground of location
                 if (pc.returnInventory().contains(subject)) {
                     removeItemFromPcInventory(subject);
                     addItemToRoom(subject);
@@ -138,6 +140,49 @@ public class Game {
                 }
             } else if (action.equals("look")) {
                 updateActionFeedback("Looking for what?");
+            } else if(action.equals("open")){
+                if(returnRoomContainers().contains(subject)){
+                    Container container = data.loadContainer(subject);
+                    if(container.returnContainerIsClosed()){
+                        if(container.returnContainerIsLocked()){
+                            updateActionFeedback(subject + " is locked.");
+                        }
+                        //TODO: open container
+                    }else{
+                        updateActionFeedback(subject + " is already open.");
+                    }
+                }else{
+                    updateActionFeedback("NO SUCH ITEM");
+                }
+            } else if(action.equals("search")){
+                if(returnRoomContainers().contains(subject)){
+                    Container container = data.loadContainer(subject);
+                    if(container.returnContainerIsClosed()){
+                        updateActionFeedback(subject + " is closed, you need to open it first.");
+                    }else{
+                        //TODO: search containers
+                        // list item from specified container
+                        updateActionFeedback("search action needs to be implemented still");
+                    }
+                }else{
+                    updateActionFeedback("Unclear command");
+                }
+
+            }else if(action.equals("unlock")){
+                if(returnRoomContainers().contains(subject)){
+                    Container container = data.loadContainer(subject);
+                    if(container.returnContainerIsLocked()){
+                        if(pc.returnInventory().contains("lockpick")){
+                            //TODO: implement unlock action
+                        }else{
+                            updateActionFeedback("You have no lockpicks to unlock " + subject);
+                        }
+                    }else{
+                        updateActionFeedback(subject + " is not locked.");
+                    }
+                }else{
+                    updateActionFeedback("unknown command");
+                }
             }
         }catch(IndexOutOfBoundsException e){
             updateActionFeedback("Unknown command!");
@@ -157,15 +202,15 @@ public class Game {
     }
 
     public String returnRoomName(){
-        return data.loadRoom(currentRoom.returnId()).returnRoomName();
+        return data.loadRoom(currentRoom.returnRoomId()).returnRoomName();
     }
 
     public String returnRoomDescription(){
-        return data.loadRoom(currentRoom.returnId()).returnRoomDescription();
+        return data.loadRoom(currentRoom.returnRoomId()).returnRoomDescription();
     }
 
     private List gatherRoomExits(){
-        HashMap exits = data.loadRoom(currentRoom.returnId()).returnExits();
+        HashMap exits = data.loadRoom(currentRoom.returnRoomId()).returnRoomExits();
         List<String> exitKeys = new ArrayList<String>();
         for(Object o : exits.keySet()){
             if(!exits.get(o).toString().equals("x")){
@@ -173,6 +218,20 @@ public class Game {
             }
         }
         return exitKeys;
+    }
+
+    private List gatherShopItems(){
+            HashMap shopItems = data.loadShop(currentRoom.returnRoomId()).returnShop();
+            List<String> items = new ArrayList<String>();
+        try {
+            for (Object o : shopItems.keySet()) {
+                items.add(o.toString());
+            }
+            return items;
+        }catch(NullPointerException e){
+            e.getMessage();
+        }
+        return items;
     }
 
     public String returnPcInventory(){
@@ -188,7 +247,7 @@ public class Game {
     public String returnRoomItems(){
         try {
         setCurrentRoomGroundItems();
-        List items = data.loadRoom(currentRoom.returnId()).returnItems();
+        List items = data.loadRoom(currentRoom.returnRoomId()).returnItems();
         String allItems = "";
 
             for (Object o : items) {
@@ -200,12 +259,12 @@ public class Game {
             e.getMessage();
         }
         return "Nothing"; // when there are no items, or one item cannot be found
-        //TODO: when atleast one item cannot be found, none of the items will be shown
+        //TODO: when at least one item cannot be found, none of the items will be shown
     }
 
     public String returnRoomContainers(){
         setCurrentRoomContainers();
-        List containers = data.loadRoom(currentRoom.returnId()).returnRoomContainers();
+        List containers = data.loadRoom(currentRoom.returnRoomId()).returnRoomContainers();
         String allContainers = "";
         try {
             for (Object o : containers) {
@@ -219,6 +278,14 @@ public class Game {
         return allContainers;
     }
 
+    public String returnShopItems(){
+        String shopItems = "";
+        for(Object s : gatherShopItems()){
+            shopItems += s + "\n";
+        }
+        return shopItems.replaceAll("\"", "");
+    }
+
     public String returnRoomExits(){
         String allExits = "";
         for(Object s : gatherRoomExits()){
@@ -228,7 +295,7 @@ public class Game {
     }
 
     private String returnExit(String exit){
-        HashMap exits = data.loadRoom(currentRoom.returnId()).returnExits();
+        HashMap exits = data.loadRoom(currentRoom.returnRoomId()).returnRoomExits();
         Object key = exits.get(exit);
         if(key.equals("x")){
             return "no exit";
@@ -245,6 +312,8 @@ public class Game {
     }
 
     private void setCurrentRoomContainers(){this.currentRoomContainers = currentRoom.returnRoomContainers();}
+
+//    private void setCurrentRoomShop(){this.currentShop = currentRoom.returnShop();}
 
     private void removeItemFromRoom(String item){
         this.currentRoomGroundItems.remove(item);

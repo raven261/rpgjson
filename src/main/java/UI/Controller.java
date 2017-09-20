@@ -32,8 +32,8 @@ public class Controller implements Initializable {
     private TextArea roomDescription;
     @FXML
     private TextField actionTextField;
-    @FXML
-    private Button btnStart;
+    //@FXML
+    //private Button btnStart;
     @FXML
     private TextArea exitsOverview;
     @FXML
@@ -44,10 +44,12 @@ public class Controller implements Initializable {
     private TextArea coinPurse;
     @FXML
     private TextArea actionFeedback;
-    @FXML
-    private Button btnTest;
+    //@FXML
+    //private Button btnTest;
     @FXML
     private TextArea containers;
+    @FXML
+    private TextArea shopItems;
 
     @FXML
     private void handleActionTextField(ActionEvent event){
@@ -85,6 +87,7 @@ public class Controller implements Initializable {
         pcInventory.setText(game.returnPcInventory());
         coinPurse.setText(game.returnCoinPurse());
         containers.setText(game.returnRoomContainers());
+        shopItems.setText(game.returnShopItems());
     }
 
     private void openInventory(){

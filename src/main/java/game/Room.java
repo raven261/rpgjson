@@ -18,6 +18,8 @@ public class Room {
     private List<String> containers = new ArrayList<String>();
     private HashMap<String, String> exits = new HashMap<String, String>();
 
+    Room(){}
+
     Room(String id, String name, String n, String s, String e, String w, List<String> ground, List<String> containers, String desc){
         setId(id);
         setName(name);
@@ -47,15 +49,7 @@ public class Room {
     }
 
     private void setItemOnGround(List<String> ground){
-//        this.ground.add("gold");
-//        this.ground.add("bread");
-//        this.ground.add("shadow");
-//        this.ground.add("stone");
-//        this.ground.add("potionH");
-//        this.ground.add("lockpick1");
-        //this.ground.add("barrel1");
         this.ground = ground;
-
     }
 
     private void setContainersInRoom(List<String> container){this.containers = container;}
@@ -64,11 +58,11 @@ public class Room {
         this.exits.put(direction, room);
     }
 
-    HashMap returnExits(){
+    HashMap returnRoomExits(){
         return this.exits;
     }
 
-    String returnId(){
+    String returnRoomId(){
         return this.id;
     }
 

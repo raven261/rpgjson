@@ -18,9 +18,7 @@ class Character {
 
 
 
-    Character(){
-
-    }
+    Character(){}
     Character(String name, String loc, int gold){
         setName(name);
         setLocation(loc);

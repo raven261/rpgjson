@@ -15,59 +15,34 @@ class Data {
     private static final String CONTAINER_FILE_LOCATION = "C:\\Users\\ravenalb\\IdeaProjects\\jsonTest\\src\\main\\java\\containers\\";
 
 
+    void saveItem(Object item, String id){
+            String file = ITEM_FILE_LOCATION + id + ".json";
+            writeFile(file, item);
+    }
+
+    void savePC(Object pc, String id){
+        String file = PC_FILE_LOCATION + id + ".json";
+        writeFile(file, pc);
+    }
 
     void saveRoom(Object room, String id){
-        try{
-
-            String file = ROOM_FILE_LOCATION + id + ".json";
-            FileWriter writer = new FileWriter(file);
-            Gson gson = new Gson();
-            String object = gson.toJson(room);
-            writer.write(object);
-            writer.close();
-            System.out.println("room " + id + " saved");
-        }catch(IOException e){
-            e.getMessage();
-        }
+        String file = ROOM_FILE_LOCATION + id + ".json";
+        writeFile(file, room);
     }
 
-    void savePC(Object o, String id){
-        try{
-            String file = PC_FILE_LOCATION + id + ".json";
-            FileWriter writer = new FileWriter(file);
-            Gson gson = new Gson();
-            String object = gson.toJson(o);
-            writer.write(object);
-            writer.close();
-            System.out.println("character saved");
-        }catch(IOException e){
-            e.getMessage();
-        }
+    void saveContainers(Object container, String id){
+        String file = CONTAINER_FILE_LOCATION + id + ".json";
+        writeFile(file, container);
     }
 
-    void saveItem(Object o, String id){
+    private void writeFile(String file, Object gameObject){
         try{
-            String file = ITEM_FILE_LOCATION + id + ".json";
             FileWriter writer = new FileWriter(file);
             Gson gson = new Gson();
-            String object = gson.toJson(o);
+            String object = gson.toJson(gameObject);
             writer.write(object);
             writer.close();
-            System.out.println("item " + id + " saved");
-        }catch(IOException e){
-            e.getMessage();
-        }
-    }
-
-    void saveContainers(Object c, String id){
-        try{
-            String file = CONTAINER_FILE_LOCATION + id + ".json";
-            FileWriter writer = new FileWriter(file);
-            Gson gson = new Gson();
-            String containerObject = gson.toJson(c);
-            writer.write(containerObject);
-            writer.close();
-            System.out.println("container " + id + " saved");
+            System.out.println(file + " saved");
         }catch(IOException e){
             e.getMessage();
         }
@@ -85,14 +60,24 @@ class Data {
         return null;
     }
 
+    Shop loadShop(String id){
+        Gson gson = new Gson();
+        String file = ROOM_FILE_LOCATION + id + ".json";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            return gson.fromJson(br, Shop.class);
+        }catch(FileNotFoundException e){
+            e.getMessage();
+        }
+        return null;
+    }
+
 
     Character loadPC(String id){
         Gson gson = new Gson();
         String file = PC_FILE_LOCATION + id + ".json";
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            //Room currentRoom = gson.fromJson(br, Room.class);
-            //currentRoom.returnRoomName();
             return gson.fromJson(br, Character.class);
         }catch(FileNotFoundException e){
             e.getMessage();

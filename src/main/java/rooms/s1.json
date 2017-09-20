@@ -1,0 +1,1 @@
+{"shop":{"bread":1},"id":"s1","name":"Test Shop","description":"A shop for now to test the barter mechanism","ground":[],"containers":[],"exits":{"east":"x","south":"x","north":"r1","west":"x"}}

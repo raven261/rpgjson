@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -21,8 +22,8 @@ class GameSetup {
     private Data data = new Data();
 
     public static void main(String [] args){
-        new GameSetup().createItems();
-        new GameSetup().setupGroundItems();
+        new GameSetup().createRooms();
+
     }
 
     void createItems(){
@@ -55,11 +56,9 @@ class GameSetup {
         allContainers.add(chest);
 
         for(Container c : allContainers){
+            // to save containers in the items section, they can be used for inspection
             data.saveContainers(c, c.returnContainerId());
         }
-
-        // to put containers in the items section, they can be used for inspection
-
     }
 
     private void setupGroundItems(){
@@ -117,25 +116,29 @@ class GameSetup {
 
     void createRooms(){
 
-        Room r1 = new Room("r1", "Town square", "r2", "x", "r3", "x", fillGroundItems(1), addContainerToRoom(1), "This is from a development point of view the start room of the game.\n Here will be most of the test situations taking place so that navigating will not be necessary.");
+        //TODO: rewrite ground as an open container and add to room
+        HashMap<String, Integer> shop = new HashMap<String, Integer>();
+        shop.put("bread", 1);
+
+        Room r1 = new Room("r1", "Town square", "r2", "s1", "r3", "x", fillGroundItems(1), addContainerToRoom(1), "This is from a development point of view the start room of the game.\n Here will be most of the test situations taking place so that navigating will not be necessary.");
         Room r2 = new Room("r2", "North Street", "x", "r1", "x", "x", fillGroundItems(2), addContainerToRoom(2), "test 2 description");
         Room r3 = new Room("r3", "East street", "x", "x", "x", "r1", fillGroundItems(3), addContainerToRoom(3), "test 3 description");
+        Shop s1 = new Shop("s1", "Test Shop", "r1", "x", "x", "x", fillGroundItems(3), addContainerToRoom(3), "A shop for now to test the barter mechanism", shop);
 
         allRooms.add(r1);
         allRooms.add(r2);
         allRooms.add(r3);
+        allRooms.add(s1);
 
         for(Room r : allRooms){
-            data.saveRoom(r, r.returnId());
+            data.saveRoom(r, r.returnRoomId());
         }
     }
 
 
     void createCharacter(){
         Character pc = new Character("name", "r1", 2);
-
         data.savePC(pc, "pc");
     }
-
 
 }

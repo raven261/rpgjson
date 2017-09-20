@@ -25,8 +25,8 @@ class Container{
         setId(id);
         setName(name);
         setDescription(description);
-        setClosed(closed);
-        setLocked(locked);
+        setIsClosed(closed);
+        setIsLocked(locked);
         setLockDifficulty(lockDifficulty);
         setContent(containerContent);
     }
@@ -47,7 +47,7 @@ class Container{
         this.containerContent = content;
     }
 
-    private void setLocked(boolean locked){
+    private void setIsLocked(boolean locked){
         this.locked = locked;
     }
 
@@ -55,7 +55,7 @@ class Container{
         this.lockDifficulty = difficulty;
     }
 
-    private void setClosed(boolean closed){
+    private void setIsClosed(boolean closed){
         this.closed = closed;
     }
 
@@ -71,15 +71,15 @@ class Container{
         return this.description;
     }
 
-    boolean returnLockedBoolean(){
+    boolean returnContainerIsLocked(){
         return this.locked;
     }
 
-    boolean returnClosedBoolean(){
+    boolean returnContainerIsClosed(){
         return this.closed;
     }
 
-    String returnLockDifficulty(){
+    String returnContainerLockDifficulty(){
         return this.lockDifficulty;
     }
 
